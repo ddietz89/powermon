@@ -38,10 +38,12 @@ class DataPacket():
         self.voltage = None
 	self.serial = None
 	self.channels = {}
+	self.seconds = None
 
     def print_packet(self):
         print "Packet"
 	print ""
+	print "Counter: " + str(self.seconds)
 	print "Voltage: " + str(self.voltage) + " V"
         
 	for num in self.channels.keys():
@@ -157,6 +159,7 @@ class GEM48CHBinaryPacket(Packet):
         dp = DataPacket()
 
         dp.voltage = self.hilo(packet[0:2]) / 10.0
+	dp.seconds = self.lohi(packet[582:586])
 
 	for i in range(1,self.channels+1):
 	    ch = Channel()
