@@ -29,13 +29,13 @@ def create_channel_packet():
     if 'channel_id' not in data or 'voltage' not in data or 'seconds' not in data or 'wattsec' not in data:
         return bad_post("Missing required fields.")
 
-	packet = ChannelPacket()
-	packet.from_dict(data)
-
-	db.session.add(packet)
-	db.session.commit()
-
-	response = jsonify(packet.to_dict())
-	response.status_code = 200
-
-	return response
+    packet = ChannelPacket()
+    packet.from_dict(data)
+    
+    db.session.add(packet)
+    db.session.commit()
+    
+    response = jsonify(packet.to_dict())
+    response.status_code = 200
+    
+    return response
