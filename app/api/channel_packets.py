@@ -29,7 +29,7 @@ def create_channel_packet():
     if 'channel_id' not in data or 'voltage' not in data or 'seconds' not in data or 'wattsec' not in data:
         return bad_post("Missing required fields.")
 
-    packet = ChannelPacket()
+    packet = ChannelPackets()
     packet.from_dict(data)
     
     db.session.add(packet)
