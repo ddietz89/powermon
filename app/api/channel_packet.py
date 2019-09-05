@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from sqlalchemy import desc
 from app.api import bp
 from app import db
 from app.models import ChannelPacket
@@ -20,7 +21,7 @@ def get_channel_packet(id):
 def get_channel_packets():
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 360, type=int), 360)
-    data  = ChannelPacket.to_collection_dict(ChannelPacket.query, page, per_page)
+    data  = ChannelPacket.to_collection_dict(ChannelPacket.query.order_by(desc(ChannelPacket.datetime)), page, per_page)
     return jsonify(data)
 
 @bp.route('/channel_packets', methods=['POST'])
