@@ -2,5 +2,5 @@ from flask import Blueprint
 
 bp = Blueprint('api', __name__)
 
-from app.api import channel_packets
+from app.api import errors, channel_packets 
 

@@ -22,6 +22,7 @@ class ChannelPackets(PaginatedMixin, db.Model):
    datetime = db.Column(db.DateTime, default=datetime.utcnow)
    voltage = db.Column(db.Integer)
    wattsec = db.Column(db.Integer)
+   seconds = db.Column(db.Integer)
    
 
    def to_dict(self):
@@ -31,6 +32,13 @@ class ChannelPackets(PaginatedMixin, db.Model):
 	   'datetime': self.datetime,
 	   'voltage': float(self.voltage) / 10.0,
 	   'wattsec': self.wattsec
+	   'seconds': self.seconds
 	   }
 
        return data
+
+    def from_dict(self, data):
+        for field in ['channel_id', 'voltage', 'wattsec', 'seconds']:
+	    if field in data:
+	        setattr(self, field, data[field]
+
