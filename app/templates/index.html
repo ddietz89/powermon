@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<p>
+		Current status of {{ main_channel['name'] }}
+	</p>
+	<p>
+		Watts: {{ main_channel['watts'] }} W<br/>
+		Voltage: {{ main_channel['voltage'] }} V
+	</p>
+
+
+	
+{% endblock %}
+

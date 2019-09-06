@@ -41,3 +41,15 @@ db.connect("localhost", "powermon", "powermongem", "powermon")
 #wattsec BIGINT(11) NOT NULL,
 #datetime DATETIME NOT NULL,
 #PRIMARY KEY (id))''')
+
+db.execute('''CREATE TABLE IF NOT EXISTS aggregate_by_minute (
+id int(11) NOT NULL AUTO_INCREMENT,
+datetime DATETIME NOT NULL,
+wattsec BIGINT(11) NOT NULL,
+PRIMARY KEY (id))''')
+
+db.execute('''CREATE TABLE IF NOT EXISTS aggregate_status (
+id int(11) NOT NULL AUTO_INCREMENT,
+datetime DATETIME,
+channel_id INT(11) NOT NULL,
+PRIMARY KEY (id))''')

@@ -52,13 +52,25 @@ class Channel(PaginatedMixin, db.Model):
     device_id = db.Column(db.Integer)
     channel_num = db.Column(db.Integer)
     name = db.Column(db.String)
+
     
     def to_dict(self):
+        latest_packets = (
+            Channel.query.join(ChannelPacket, Channel.id == ChannelPacket.channel_id)
+            .add_columns(ChannelPacket.voltage, ChannelPacket.wattsec, ChannelPacket.seconds)
+	    .filter(Channel.id == self.id)
+            .order_by(ChannelPacket.datetime.desc())
+            .limit(2)
+	    .all()
+        )
+	watts = (latest_packets[0].wattsec - latest_packets[1].wattsec) / (latest_packets[0].seconds - latest_packets[1].seconds)
         data = {
             'id': self.id,
             'device_id': self.device_id,
             'channel_num': self.channel_num,
-            'name': self.name
+            'name': self.name,
+	    'watts': watts,
+	    'voltage': float(latest_packets[0].voltage)/10.0
         }
         
         return data

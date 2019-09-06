@@ -12,6 +12,8 @@ def create_app(config_class=Config):
 
     db.init_app(app)
 
+    from app.web import bp as web_bp
+    app.register_blueprint(web_bp)
 
     from app.api import bp as api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
