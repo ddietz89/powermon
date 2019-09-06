@@ -291,14 +291,14 @@ for agg in aggregates:
         if existing:
 	    sql = "UPDATE aggregate_by_day SET wattsec = '" + str(total_ws) + "', voltage = '" + str(volts) + "', watt = '" + str(watts) + "' WHERE channel_id = '" + str(agg['channel_id']) + "' AND datetime = '" + str(datetime.fromtimestamp(time).strftime("%Y-%m-%d %H:%M:%S")) + "'"
      	    print sql
-	    #db.execute(sql)
+	    db.execute(sql)
 	else:
 	    sql = "INSERT INTO aggregate_by_day (channel_id, datetime, wattsec, voltage, watt) VALUES ('" + str(agg['channel_id']) + "','" + str(datetime.fromtimestamp(time).strftime("%Y-%m-%d %H:%M:%S")) + "','" + str(total_ws) + "','" + str(volts) + "','" + str(watts) + "')"
      	    print sql
-	    #db.execute(sql)
+	    db.execute(sql)
 
         sql = "UPDATE aggregate_status SET datetime = '" + str(datetime.fromtimestamp(time).strftime("%Y-%m-%d %H:%M:%S")) + "' WHERE id = '" + str(agg['id']) + "'"
-	#db.execute(sql)
+	db.execute(sql)
 
 
         
