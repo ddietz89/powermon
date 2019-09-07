@@ -53,3 +53,13 @@ id int(11) NOT NULL AUTO_INCREMENT,
 datetime DATETIME,
 channel_id INT(11) NOT NULL,
 PRIMARY KEY (id))''')
+
+db.execute('''CREATE TABLE IF NOT EXISTS user (
+id int(11) NOT NULL AUTO_INCREMENT,
+datetimecreated DATETIME NOT NULL,
+datetimeremoved DATETIME NOT NULL DEFAULT 0,
+datetimemodified DATETIME NOT NULL,
+name varchar(50) NOT NULL,
+password varchar(192) NOT NULL,
+username varchar(50) NOT NULL,
+PRIMARY KEY (id))''')
