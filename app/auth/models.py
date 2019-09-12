@@ -4,10 +4,11 @@ from datetime import datetime
 import jwt
 from time import time
 from flask import current_app
+from app.models import PaginatedMixin
 
 from flask_login import UserMixin
 
-class User(UserMixin, db.Model):
+class User(UserMixin, PaginatedMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -55,6 +56,8 @@ class User(UserMixin, db.Model):
         for field in ['name', 'username', 'email']:
             if field in data:
                 setattr(self, field, data[field])
+	if new_user and 'password' in data:
+	    self.set_password(data['password'])
 
     @staticmethod
     def check_token(token):
