@@ -5,7 +5,9 @@ import jwt
 from time import time
 from flask import current_app
 
-class User(db.Model):
+from flask_login import UserMixin
+
+class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)

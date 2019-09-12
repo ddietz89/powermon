@@ -3,6 +3,9 @@
 	{% if title %}<title>{{ title }}</title>{% endif %}
 	</head>
 	<body>
+		<p>
+			{% if current_user.is_authenticated %}Welcome, {{ current_user.name }}. <a href = "/auth/logout">Log Out</a>{% else %}<a href = "/auth/login">Log In</a>{% endif %}
+		</p>
 
 
 
