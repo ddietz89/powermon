@@ -14,10 +14,12 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String, nullable=False)
     email = db.Column(db.String, nullable=False)
     password = db.Column(db.String(192), nullable=False)
+    token = db.Column(db.String(32), index=True, unique=True)
 
-    datetimecreated = db.Column(db.DateTime, default=datetime.utcnow)
-    datetimemodified = db.Column(db.DateTime, default=datetime.utcnow)
-    datetimeremoved = db.Column(db.DateTime, default=0)
+    created = db.Column(db.DateTime, default=datetime.utcnow)
+    modified = db.Column(db.DateTime, default=datetime.utcnow)
+    removed = db.Column(db.DateTime, default=0)
+    last_seen = db.Column(db.DateTime, default=0)
 
     def __init__(self, name, username, email):
         self.name = name
@@ -36,3 +38,24 @@ class User(UserMixin, db.Model):
             {'reset_password': self.id, 'exp': time() + expires_in},
             current_app.config['SECRET_KEY'],
             algorithm='HS256').decode('utf-8') 
+
+    def to_dict(self):
+        data = {
+           'id': self.id,
+           'name': self.name,
+           'username': self.username,
+           'last_seen': self.last_seen,
+           'email': self.email,
+           'created': self.created,
+           'modified': self.modified,
+        }
+        return data
+
+    def from_dict(self, data):
+        for field in ['name', 'username', 'email']:
+            if field in data:
+                setattr(self, field, data[field])
+
+    @staticmethod
+    def check_token(token):
+        return User.query.filter_by(token=token).first()
